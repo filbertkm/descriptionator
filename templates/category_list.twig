@@ -1,0 +1,16 @@
+{% extends 'layout.twig' %}
+
+{% block h1 %}Category members{% endblock %}
+{% block main %}
+<ul>
+{% if pages|length == 0 %}
+Category not found or is empty.
+{% else %}
+{% for page in pages %}
+<li><a href="https://en.wikipedia.org/wiki/{{ page }}">{{ page }}</a></li>
+{% endfor %}
+</ul>
+
+{% endif %}
+
+{% endblock %}

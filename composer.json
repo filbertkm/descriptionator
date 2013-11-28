@@ -1,0 +1,19 @@
+{
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/filbertkm/WikiClient.git"
+		}
+	],
+	"require": {
+		"wikiclient/wikiclient": "dev-master",
+		"silex/silex": "~1.1",
+		"twig/twig": "~1.10",
+		"lusitanian/oauth": "~0.2"
+	},
+	"autoload": {
+		"psr-0": {
+			"Descriptionator\\": "src"
+		}
+	}
+}
