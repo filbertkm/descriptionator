@@ -15,6 +15,5 @@ $app->get( '/wiki/', function() use ( $app, $oauth ) {
 	return $oauth->authorize();
 });
 
-$app->mount( '/category', new Descriptionator\Controller\CategoryController() );
 $app->mount( '/item', new Descriptionator\Controller\ItemController() );
 $app->mount( '/', new Descriptionator\Controller\IndexController() );

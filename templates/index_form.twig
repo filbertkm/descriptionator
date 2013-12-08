@@ -1,0 +1,9 @@
+{% extends 'layout.twig' %}
+{% block h1 %}Select a category{% endblock %}
+{% block lead %}...{% endblock %}
+{% block main %}
+{{ form_start(form, { 'attr': {'id': 'category-select' }}) }}
+{{ form_widget(form.category) }}
+<button type="submit" class="btn btn-default">Submit</button>
+{{ form_end(form) }}
+{% endblock %}

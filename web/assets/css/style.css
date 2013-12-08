@@ -1,3 +1,7 @@
 .navbar-nav {
   float: right;
 }
+
+#category-select input[type=text] {
+  width: 250px;
+}
