@@ -9,6 +9,7 @@
 		"wikiclient/wikiclient": "dev-master",
 		"silex/silex": "~1.1",
 		"symfony/form": "~2.3",
+		"symfony/validator": "~2.3",
 		"twig/twig": "~1.10",
 		"lusitanian/oauth": "~0.2"
 	},
