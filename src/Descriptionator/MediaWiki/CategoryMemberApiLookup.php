@@ -13,10 +13,9 @@ class CategoryMemberApiLookup implements CategoryMemberLookup {
 		$this->user = $user;
 	}
 
-	public function find( $name, Wiki $wiki ) {
+	public function find( $cat, Wiki $wiki ) {
 		$client = new ApiClient( '/tmp/', $wiki->getBaseUrl(), $this->user );
 
-		$fullCat = "Category:$name";
 		$params = $client->buildParams(
 			array(
 				'action' => 'query',
@@ -24,7 +23,7 @@ class CategoryMemberApiLookup implements CategoryMemberLookup {
 				'cmlimit' => '100',
 				'cmnamespace' => 0,
 				'cmprop' => 'title',
-				'cmtitle' => $fullCat
+				'cmtitle' => $cat
 			)
 		);
 
