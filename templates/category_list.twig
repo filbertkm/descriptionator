@@ -3,11 +3,11 @@
 {% block h1 %}Category members{% endblock %}
 {% block main %}
 <ul>
-{% if pages|length == 0 %}
-Category not found or is empty.
+{% if items|length == 0 %}
+Items not found.
 {% else %}
-{% for page in pages %}
-<li><a href="https://en.wikipedia.org/wiki/{{ page }}">{{ page }}</a></li>
+{% for item in items %}
+<li><a href="https://en.wikipedia.org/wiki/{{ item.page }}">{{ item.page }}</a> ({{ item.id }})</li>
 {% endfor %}
 </ul>
 
