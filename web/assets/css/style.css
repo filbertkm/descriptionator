@@ -5,3 +5,7 @@
 #category-select input[type=text] {
   width: 350px;
 }
+
+table#category-list td {
+  padding: .5em 1.5em;
+}
