@@ -6,7 +6,13 @@
 				+ req.term + "&namespace=14&format=json&callback=?",
 			req,
 			function( data ) {
-				add( data[1] );
+				var trimmed = []
+
+				$.each( data[1], function( key, suggestion ) {
+					trimmed.push( suggestion.substring( suggestion.indexOf( ':' ) + 1 ) );
+				});
+
+				add( trimmed );
 			}
 		);
 	}

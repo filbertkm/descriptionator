@@ -23,7 +23,7 @@ class CategoryMemberApiLookup implements CategoryMemberLookup {
 				'cmlimit' => '100',
 				'cmnamespace' => 0,
 				'cmprop' => 'title',
-				'cmtitle' => $cat
+				'cmtitle' => "Category:$cat"
 			)
 		);
 
