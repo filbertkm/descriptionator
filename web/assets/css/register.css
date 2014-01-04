@@ -20,16 +20,9 @@
   padding: 38px;
 }
 
-#register-form input[type=text] {
+#register-form .main .form-control {
   margin-bottom: 10px;
-}
-
-#register-form .form-congtol {
   border-radius: 5px;
-  position: relative;
-  font-size: 13px;
-  height: 16px;
-  padding: 16px;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;

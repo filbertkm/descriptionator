@@ -24,6 +24,7 @@ class RegisterController implements ControllerProviderInterface {
 		$form = $app['form.factory']->createBuilder( 'form', $data )
 			->add( 'username', 'text' )
 			->add( 'password', 'password' )
+			->add( 'email', 'email' )
 			->getForm();
 
 		$form->handleRequest( $app['request'] );
