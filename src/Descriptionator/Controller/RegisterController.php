@@ -5,7 +5,7 @@ namespace Descriptionator\Controller;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 
-class IndexController implements ControllerProviderInterface {
+class RegisterController implements ControllerProviderInterface {
 
 	public function connect( Application $app ) {
 		$controller = $app['controllers_factory'];
@@ -17,21 +17,23 @@ class IndexController implements ControllerProviderInterface {
 
 	public function form( Application $app ) {
 		$data = array(
-			'category' => ''
+			'username' => '',
+			'password' => ''
 		);
 
 		$form = $app['form.factory']->createBuilder( 'form', $data )
-			->add( 'category' )
+			->add( 'username', 'text' )
+			->add( 'password', 'password' )
 			->getForm();
 
 		$form->handleRequest( $app['request'] );
 
 		if ( $form->isValid() ) {
-			$data = $form->getData();
-			return $app->redirect( '/category/' . $data['category'] );
+//			$data = $form->getData();
+//			return $app->redirect( '/category/' . $data['category'] );
 		}
 
-		return $app['twig']->render( 'index_form.twig', array( 'form' => $form->createView() ) );
+		return $app['twig']->render( 'register_form.twig', array( 'form' => $form->createView() ) );
 	}
 
 }

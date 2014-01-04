@@ -1,0 +1,29 @@
+{% extends 'layout.twig' %}
+{% block cssstyles %}
+<link href="{{ app.request.basepath }}/assets/css/login.css" rel="stylesheet">
+{% endblock %}
+{% block main %}
+  <div class="row">
+    {{ form_start(form, { 'attr': { 'id': 'login-form' }}) }}
+    <h3 class="heading-desc">Login</h3>
+    <div class="main">
+      {{ form_widget(form.username, { 'attr' : { 'placeholder' : 'username', 'class' : 'form-control' } }) }}
+      {{ form_widget(form.password, { 'attr' : { 'placeholder' : 'password', 'class' : 'form-control' } }) }}
+      <span class="clearfix"></span>
+    </div>
+    <div class="login-footer">
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+	      <div class="left-section">
+		    <a href="">Forgot your password?</a>
+		    <a href="">Sign up now</a>
+	      </div>
+        </div>
+        <div class="col-xs-6 col-md-6 pull-right">
+          <button type="submit" class="btn btn-large btn-danger pull-right">Submit</button>
+        </div>
+      </div>
+    </div>
+    {{ form_end(form) }}
+  </div>
+{% endblock %}
