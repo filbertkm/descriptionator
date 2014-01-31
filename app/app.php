@@ -12,6 +12,12 @@ $app->register( new Silex\Provider\TranslationServiceProvider(), array(
 	'translator.messages' => array(),
 ) );
 
+$app->register( new Silex\Provider\DoctrineServiceProvider(), array(
+	'dbs.options' => array(
+		'db' => $dbParams
+	)
+) );
+
 $app->register( new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__ . '/../templates'
 ) );
@@ -30,5 +36,3 @@ $oauthRequest = new WikiClient\OAuth\OAuthRequest( $config );
 require_once __DIR__ . '/routes.php';
 
 $app['debug'] = true;
-
-$app->run();
