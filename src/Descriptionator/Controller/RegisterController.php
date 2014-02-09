@@ -2,6 +2,8 @@
 
 namespace Descriptionator\Controller;
 
+use Descriptionator\Store\UserSqlStore;
+use Descriptionator\User\User;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 
@@ -30,7 +32,13 @@ class RegisterController implements ControllerProviderInterface {
 		$form->handleRequest( $app['request'] );
 
 		if ( $form->isValid() ) {
-//			$data = $form->getData();
+			$data = $form->getData();
+			$userStore = new UserSqlStore( $app );
+			$user = new User( $data['username'], $data['password'], '', array(), $data['email'] );
+			$result = $userStore->addUser( $user );
+
+			var_export( $result );
+
 //			return $app->redirect( '/category/' . $data['category'] );
 		}
 

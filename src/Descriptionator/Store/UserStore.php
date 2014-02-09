@@ -2,11 +2,13 @@
 
 namespace Descriptionator\Store;
 
-use Descriptionator\Model\User;
+use Descriptionator\User\User;
 
 interface UserStore {
 
-	public function getUser( $id );
+	public function getUser( $username );
+
+	public function getUserById( $id );
 
 	public function addUser( User $user );
 

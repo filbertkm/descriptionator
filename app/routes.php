@@ -18,4 +18,5 @@ $app->get( '/wiki/', function() use ( $app, $oauth ) {
 $app->mount( '/category', new Descriptionator\Controller\CategoryController() );
 $app->mount( '/login', new Descriptionator\Controller\LoginController() );
 $app->mount( '/register', new Descriptionator\Controller\RegisterController() );
+$app->mount( '/admin', new Descriptionator\Controller\AdminController() );
 $app->mount( '/', new Descriptionator\Controller\IndexController() );

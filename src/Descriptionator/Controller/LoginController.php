@@ -2,8 +2,10 @@
 
 namespace Descriptionator\Controller;
 
+use Descriptionator\Form\LoginType;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoginController implements ControllerProviderInterface {
 
@@ -15,23 +17,14 @@ class LoginController implements ControllerProviderInterface {
 		return $controller;
 	}
 
-	public function form( Application $app ) {
+	public function form( Application $app, Request $request ) {
 		$data = array(
-			'username' => '',
-			'password' => ''
+			'_username' => '',
+			'_password' => ''
 		);
 
-		$form = $app['form.factory']->createBuilder( 'form', $data )
-			->add( 'username', 'text' )
-			->add( 'password', 'password' )
-			->getForm();
-
-		$form->handleRequest( $app['request'] );
-
-		if ( $form->isValid() ) {
-//			$data = $form->getData();
-//			return $app->redirect( '/category/' . $data['category'] );
-		}
+		// type, data, options
+		$form = $app['form.factory']->create( new LoginType(), $data, array() );
 
 		return $app['twig']->render( 'login_form.twig', array( 'form' => $form->createView() ) );
 	}
