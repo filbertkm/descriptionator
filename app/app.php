@@ -50,9 +50,15 @@ $app['watchlist'] = $app->share( function() {
 	return new Descriptionator\MediaWiki\Watchlist;
 });
 
-$oauth = new WikiClient\OAuth\OAuth( $config, $app );
-$oauthRequest = new WikiClient\OAuth\OAuthRequest( $config );
+$app['oauth'] = $app->share( function( $app ) use ( $config ) {
+	return new WikiClient\OAuth\OAuth( $config, $app );
+});
 
+$app['oauth.request'] = $app->share( function() use ( $config ) {
+	return new WikiClient\OAuth\OAuthRequest( $config );
+});
+
+require_once __DIR__ . '/wikis.php';
 require_once __DIR__ . '/routes.php';
 
 $app['debug'] = true;

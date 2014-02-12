@@ -1,10 +1,13 @@
 <?php
 
-$app->get( '/watchlist/', function() use( $app, $oauthRequest ) {
+$app->get( '/watchlist/', function() use( $app ) {
+	$oauthRequest = $app['oauth.request'];
 	return $app['watchlist']->get( $oauthRequest );
 });
 
-$app->get( '/wiki/', function() use ( $app, $oauth ) {
+$app->get( '/wiki/', function() use ( $app ) {
+	$oauth = $app['oauth'];
+
 	$token = $app['request']->query->get( 'oauth_token' );
 	$verifier = $app['request']->query->get( 'oauth_verifier' );
 
