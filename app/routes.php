@@ -2,7 +2,7 @@
 
 $app->get( '/watchlist/', function() use( $app ) {
 	$oauthRequest = $app['oauth.request'];
-	return $app['watchlist']->get( $oauthRequest );
+	return $app['watchlist']->get( $app['wikis'], $oauthRequest );
 });
 
 $app->get( '/wiki/', function() use ( $app ) {

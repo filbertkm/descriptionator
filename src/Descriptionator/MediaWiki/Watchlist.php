@@ -2,9 +2,13 @@
 
 namespace Descriptionator\MediaWiki;
 
+use WikiClient\MediaWiki\WikiFactory;
+
 class Watchlist {
 
-	public function get( $oauthRequest ) {
+	public function get( $app, $oauthRequest ) {
+		$wiki = WikiFactory::newWiki( $app['wikis'], 'testrepo' );
+
 		$apiParams = array(
 			'action' => 'query',
 			'format' => 'json',
@@ -12,7 +16,7 @@ class Watchlist {
 			'wrnamespace' => 0
 		);
 
-		return $oauthRequest->doRequest( $apiParams );
+		return $oauthRequest->get( $wiki, $apiParams );
 	}
 
 }
