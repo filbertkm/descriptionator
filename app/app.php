@@ -58,7 +58,7 @@ $app['oauth.request'] = $app->share( function() use ( $config ) {
 	return new WikiClient\OAuth\OAuthRequest( $config );
 });
 
-require_once __DIR__ . '/wikis.php';
+require_once __DIR__ . '/wiki.php';
 require_once __DIR__ . '/routes.php';
 
 $app['debug'] = true;

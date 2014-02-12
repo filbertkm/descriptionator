@@ -10,6 +10,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use WikiClient\MediaWiki\User;
+use WikiClient\MediaWiki\WikiFactory;
 
 class CategoryController implements ControllerProviderInterface {
 
