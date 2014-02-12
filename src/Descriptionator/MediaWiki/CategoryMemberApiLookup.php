@@ -3,18 +3,12 @@
 namespace Descriptionator\MediaWiki;
 
 use WikiClient\MediaWiki\ApiClient;
-use WikiClient\MediaWiki\User;
+use WikiClient\MediaWiki\Wiki;
 
 class CategoryMemberApiLookup implements CategoryMemberLookup {
 
-	protected $user;
-
-	public function __construct( User $user ) {
-		$this->user = $user;
-	}
-
 	public function find( $cat, Wiki $wiki ) {
-		$client = new ApiClient( '/tmp/', $wiki->getBaseUrl(), $this->user );
+		$client = new ApiClient( $wiki, '/tmp/' );
 
 		$params = $client->buildParams(
 			array(

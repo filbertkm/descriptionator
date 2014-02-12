@@ -2,18 +2,16 @@
 
 namespace Descriptionator\Wikidata;
 
-use Descriptionator\MediaWiki\Wiki;
 use WikiClient\MediaWiki\ApiClient;
 use WikiClient\MediaWiki\User;
+use WikiClient\MediaWiki\Wiki;
 
 class ItemApiLookup implements ItemLookup {
 
-	protected $user;
+	protected $client;
 
-	protected $wiki;
-
-	public function __construct( User $user, Wiki $wiki ) {
-		$this->client = new ApiClient( '/tmp/', $wiki->getBaseUrl(), $user );
+	public function __construct( Wiki $wiki ) {
+		$this->client = new ApiClient( $wiki, '/tmp/' );
 	}
 
 	public function getByItemId( $itemId ) {

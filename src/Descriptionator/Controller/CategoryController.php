@@ -22,12 +22,12 @@ class CategoryController implements ControllerProviderInterface {
 	}
 
 	public function members( Application $app, $catname ) {
-		$categoryMemberLookup = new CategoryMemberApiLookup( $app['mwuser'] );
-		$wiki = new Wiki( 'enwiki', 'http://en.wikipedia.org/w/api.php' );
+		$categoryMemberLookup = new CategoryMemberApiLookup();
+		$wiki = WikiFactory::newWiki( $app['wikis'], 'enwiki' );
 		$pages = $categoryMemberLookup->find( $catname, $wiki );
 
-		$repo = new Wiki( 'wikidatawiki', 'https://www.wikidata.org/w/api.php' );
-		$itemLookup = new ItemApiLookup( $app['mwuser'], $repo );
+		$repo = WikiFactory::newWiki( $app['wikis'], 'wikidatawiki' );
+		$itemLookup = new ItemApiLookup( $repo );
 		$items = $itemLookup->getItemsBySiteLinks( $pages, 'enwiki' );
 
 		$itemList = array();
