@@ -38,6 +38,11 @@ class ItemApiLookup implements ItemLookup {
 		while( $i === 1 ) {
 			$pageSet = count( $pages ) <= 50 ? $pages : array_slice( $pages, 0, 50, true );
 
+			if ( count( $pageSet ) === 0 ) {
+				// no pages
+				return array();
+			}
+
 			$params = $this->client->buildParams(
 				array(
 					'action' => 'wbgetentities',
