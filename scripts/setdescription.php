@@ -11,8 +11,9 @@ $params = array(
 	'action' => 'wbsetdescription',
 	'id' => 'Q4',
 	'language' => 'en',
-	'value' => 'Romo'
+	'value' => 'Rome'
 );
+
 /*
 $client = new ApiClient( $wiki, '/tmp' );
 $results = $client->doEdit( $params );
@@ -20,7 +21,6 @@ $data = json_decode( $results, true );
 
 var_export( $data );
 */
-$params['value']['rom'];
 
 $results = $app['oauth.request']->edit( $wiki, $params );
 $data = json_decode( $results, true );
