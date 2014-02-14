@@ -14,7 +14,7 @@ class ItemApiLookup implements ItemLookup {
 		$this->client = new ApiClient( $wiki, '/tmp/' );
 	}
 
-	public function getByItemId( $itemId ) {
+	public function getItem( $itemId ) {
 		$params = $this->client->buildParams(
 			array(
 				'action' => 'wbgetentities',
@@ -24,9 +24,13 @@ class ItemApiLookup implements ItemLookup {
 		);
 
 		$data = json_decode( $this->client->get( $params ), true );
-		$item = Item::newFromArray( $data );
+		$deserializer = new ItemDeserializer();
 
-		return $item;
+		foreach( $data['entities'] as $item ) {
+			return $deserializer->deserialize( $item );
+		}
+
+		return array();
 	}
 
 	public function getItemsBySiteLinks( $pages, $site ) {

@@ -6,6 +6,6 @@ use Descriptionator\MediaWiki\Wiki;
 
 interface ItemLookup {
 
-	public function getByItemId( $itemId );
+	public function getItem( $itemId );
 
 }

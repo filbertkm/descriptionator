@@ -2,6 +2,10 @@
   float: right;
 }
 
+form#category-select {
+  padding: 2em 0 .5em;
+}
+
 #category-select input[type=text] {
   width: 350px;
 }
