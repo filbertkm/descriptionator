@@ -72,4 +72,8 @@ class ItemApiLookup implements ItemLookup {
 		return $items;
 	}
 
+	public function getSiteLink( $id, $lang ) {
+		$data = $this->getItem( $id );
+	}
+
 }

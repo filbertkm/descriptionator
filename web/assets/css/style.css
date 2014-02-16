@@ -13,3 +13,18 @@ form#category-select {
 table#category-list td {
   padding: .5em 1.5em;
 }
+
+h2#label {
+  margin-left: .6em;
+}
+
+div#description {
+  padding: 0 2em;
+}
+
+div#snippet {
+  margin-top: 2em;
+  padding: 1.5em;
+  background: #eee;
+  width: 350px;
+}

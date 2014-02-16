@@ -2,7 +2,7 @@
 
 namespace Descriptionator\MediaWiki;
 
-class Category implements Page {
+class WikitextPage implements Page {
 
 	protected $name;
 

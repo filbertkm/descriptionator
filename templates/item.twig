@@ -2,7 +2,8 @@
 
 {% block h1 %}{{ id }}{% endblock %}
 {% block main %}
-<h2>{{ label }}</h2>
+<h2 id="label">{{ label }}</h2>
 <div id="description">{{ description }}</div>
+<div id="snippet">{{ snippet|raw }}</div>
 
 {% endblock %}
