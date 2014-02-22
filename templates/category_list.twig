@@ -11,7 +11,11 @@ Items not found.
 <td><a href="https://en.wikipedia.org/wiki/{{ item.page }}">{{ item.page }}</a> (<a href="https://www.wikidata.org/wiki/{{ item.id }}">{{ item.id }}</a>)</td>
 <td>{{ item.label }}</td>
 <td>{{ item.description }}</td>
-<td><a href="/item/{{ item.id }}">view</a></td>
+<td><a href="/item/{{ item.id }}">{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+edit
+{% else %}
+view
+{% endif %}</a></td>
 </tr>
 {% endfor %}
 </table>
