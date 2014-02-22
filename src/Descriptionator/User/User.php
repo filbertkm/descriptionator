@@ -28,6 +28,10 @@ class User implements UserInterface {
 		return $this->roles;
 	}
 
+	public function setPassword( $password ) {
+		$this->password = $password;
+	}
+
 	public function getPassword() {
 		return $this->password;
 	}

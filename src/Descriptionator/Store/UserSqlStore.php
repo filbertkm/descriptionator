@@ -16,7 +16,19 @@ class UserSqlStore implements UserStore {
 		$sql = "SELECT * FROM users where username = ?";
 		$result = $this->app['db']->fetchAssoc( $sql, array( $username ) );
 
-		return $result;
+		if ( $result ) {
+			$user = new User(
+				$result['username'],
+				$result['password'],
+				$result['salt'],
+				array(),
+				$result['email']
+			);
+
+			return $user;
+		}
+
+		return null;
 	}
 
 	public function getUserById( $id ) {
@@ -24,10 +36,11 @@ class UserSqlStore implements UserStore {
 	}
 
 	public function addUser( User $user ) {
-		$sql = "INSERT INTO users (username, password, email) VALUES(?, ?, ?)";
+		$sql = "INSERT INTO users (username, password, salt, email) VALUES(?, ?, ?, ?)";
 		$params = array(
 			$user->getUsername(),
 			$user->getPassword(),
+			$user->getSalt(),
 			$user->getEmail()
 		);
 

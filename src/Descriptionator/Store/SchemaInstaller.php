@@ -23,6 +23,8 @@ class SchemaInstaller {
 
 		$users->addColumn( 'password', 'string', array( 'length' => 255 ) );
 
+		$users->addColumn( 'salt', 'string', array( 'length' => 255 ) );
+
 		$users->addColumn( 'email', 'string', array( 'length' => 255 ) );
 		$users->addUniqueIndex( array( 'email' ) );
 

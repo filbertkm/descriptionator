@@ -51,7 +51,12 @@ class RegisterController implements ControllerProviderInterface {
 	private function processForm( Application $app, Form $form ) {
 		$data = $form->getData();
 		$userStore = new UserSqlStore( $app );
-		$user = new User( $data['username'], $data['password'], '', array(), $data['email'] );
+
+		$salt = '1234567890abc';
+		$user = new User( $data['username'], '', $salt, array(), $data['email'] );
+
+		$encoder = $app['security.encoder_factory']->getEncoder( $user );
+		$user->setPassword( $encoder->encodePassword( $data['password'], $salt ) );
 
 		try {
 			$userStore->addUser( $user );
