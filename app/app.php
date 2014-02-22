@@ -50,7 +50,8 @@ $app->register( new Silex\Provider\SecurityServiceProvider(), array(
 		)
 	),
 	'security.access_rules' => array(
-		array( '^/user', 'ROLE_USER' )
+		array( '^/user', 'ROLE_USER' ),
+		array( '^/item/Q([\d]+)/edit', 'ROLE_USER' )
 	)
 ) );
 

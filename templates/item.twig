@@ -11,7 +11,10 @@
 add description
 {% endif %}
 </span>
-<span class="edit-link">[<a href="{{ app.request.basepath }}/item/{{ id }}/edit">edit</a>]</span></div>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<span class="edit-link">[<a href="{{ app.request.basepath }}/item/{{ id }}/edit">edit</a>]</span>
+{% endif %}
+</div>
 <div id="snippet">{{ snippet|raw }}</div>
 
 {% endblock %}
