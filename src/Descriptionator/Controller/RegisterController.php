@@ -52,7 +52,7 @@ class RegisterController implements ControllerProviderInterface {
 		$data = $form->getData();
 		$userStore = new UserSqlStore( $app );
 
-		$salt = '1234567890abc';
+		$salt = '1234567890abcdefghijkl'; // needs to be length 22
 		$user = new User( $data['username'], '', $salt, array(), $data['email'] );
 
 		$encoder = $app['security.encoder_factory']->getEncoder( $user );
