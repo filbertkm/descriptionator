@@ -46,6 +46,10 @@ class User implements UserInterface {
 		return $this->salt;
 	}
 
+	public function setUsername( $username ) {
+		$this->username = $username;
+	}
+
 	public function getUsername() {
 		return $this->username;
 	}

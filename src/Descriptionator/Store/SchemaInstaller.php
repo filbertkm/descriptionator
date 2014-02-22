@@ -26,7 +26,6 @@ class SchemaInstaller {
 		$users->addColumn( 'salt', 'string', array( 'length' => 255 ) );
 
 		$users->addColumn( 'email', 'string', array( 'length' => 255 ) );
-		$users->addUniqueIndex( array( 'email' ) );
 
 		$users->addColumn( 'apipassword', 'string', array( 'length' => 255 ) );
 

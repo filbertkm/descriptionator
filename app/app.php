@@ -86,4 +86,6 @@ $app['wikidata.itemstore'] = $app->share( function( $app ) {
 	return new Descriptionator\Store\ItemStore( $repo );
 });
 
+$app['config'] = $config;
+
 $app['debug'] = true;
