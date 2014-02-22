@@ -28,6 +28,11 @@ class SchemaInstaller {
 		$users->addColumn( 'email', 'string', array( 'length' => 255 ) );
 		$users->addUniqueIndex( array( 'email' ) );
 
+		$users->addColumn( 'apipassword', 'string', array( 'length' => 255 ) );
+
+		$users->addColumn( 'oauthsecret', 'string', array( 'length' => 255 ) );
+		$users->addColumn( 'oauthtoken', 'string', array( 'length' => 255 ) );
+
 		$schema->createTable( $users );
 
 		echo "added users table\n";

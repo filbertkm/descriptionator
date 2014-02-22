@@ -79,7 +79,10 @@ require_once __DIR__ . '/wiki.php';
 require_once __DIR__ . '/routes.php';
 
 $app['wikidata.itemstore'] = $app->share( function( $app ) {
-	$repo = WikiClient\MediaWiki\WikiFactory::newWiki( $app['wikis'], 'testrepo' );
+	$token = $app['security']->getToken();
+	$user = $token ? $token->getUser() : null;
+
+	$repo = WikiClient\MediaWiki\WikiFactory::newWiki( $app['wikis'], 'testrepo', $user );
 	return new Descriptionator\Store\ItemStore( $repo );
 });
 

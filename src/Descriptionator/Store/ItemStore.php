@@ -2,6 +2,7 @@
 
 namespace Descriptionator\Store;
 
+use Descriptionator\User\User;
 use WikiClient\MediaWiki\ApiClient;
 use WikiClient\MediaWiki\Wiki;
 

@@ -16,11 +16,17 @@ class User implements UserInterface {
 
 	protected $email;
 
+	protected $apiPassword;
+
+	protected $oauthSecret;
+
+	protected $oauthToken;
+
 	public function __construct( $username, $password, $salt, array $roles, $email ) {
 		$this->username = $username;
 		$this->password = $password;
 		$this->email = $email;
-		$this->salt = $salt;
+		$this->salt = '1234567890abcdefghijkl'; // needs to be length 22
 		$this->roles = $roles;
 	}
 
@@ -46,6 +52,30 @@ class User implements UserInterface {
 
 	public function getEmail() {
 		return $this->email;
+	}
+
+	public function setApiPassword( $password ) {
+		$this->apiPassword = $password;
+	}
+
+	public function getApiPassword() {
+		return isset( $this->apiPassword ) ? $this->apiPassword : '';
+	}
+
+	public function setOAuthSecret( $secret ) {
+		$this->oauthSecret = $secret;
+	}
+
+	public function getOAuthSecret() {
+		return isset( $this->oauthSecret ) ? $this->oauthSecret : '';
+	}
+
+	public function setOAuthToken( $token ) {
+		$this->oauthToken = $token;
+	}
+
+	public function getOAuthToken() {
+		return isset( $this->oauthToken ) ? $this->oauthToken : '';
 	}
 
 	public function eraseCredentials() {

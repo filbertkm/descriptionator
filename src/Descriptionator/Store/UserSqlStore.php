@@ -25,6 +25,8 @@ class UserSqlStore implements UserStore {
 				$result['email']
 			);
 
+			$user->setApiPassword( $result['apipassword'] );
+
 			return $user;
 		}
 
@@ -36,12 +38,13 @@ class UserSqlStore implements UserStore {
 	}
 
 	public function addUser( User $user ) {
-		$sql = "INSERT INTO users (username, password, salt, email) VALUES(?, ?, ?, ?)";
+		$sql = "INSERT INTO users (username, password, salt, email, apipassword) VALUES(?, ?, ?, ?, ?)";
 		$params = array(
 			$user->getUsername(),
 			$user->getPassword(),
 			$user->getSalt(),
-			$user->getEmail()
+			$user->getEmail(),
+			$user->getApiPassword()
 		);
 
 		$result = $this->app['db']->executeUpdate( $sql, $params );

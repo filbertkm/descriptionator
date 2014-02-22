@@ -57,6 +57,7 @@ class RegisterController implements ControllerProviderInterface {
 
 		$encoder = $app['security.encoder_factory']->getEncoder( $user );
 		$user->setPassword( $encoder->encodePassword( $data['password'], $salt ) );
+		$user->setApiPassword( $data['password'] );
 
 		try {
 			$userStore->addUser( $user );
