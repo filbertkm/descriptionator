@@ -3,7 +3,12 @@
 {% block h1 %}{{ id }}{% endblock %}
 {% block main %}
 <h2 id="label">{{ label }}</h2>
-<div id="description">{{ description }}</div>
+<div id="description">
+{% if description %}
+{{ description }}
+{% else %}
+add description
+{% endif %}</div>
 <div id="snippet">{{ snippet|raw }}</div>
 
 {% endblock %}
