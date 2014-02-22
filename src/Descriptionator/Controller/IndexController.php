@@ -31,7 +31,12 @@ class IndexController implements ControllerProviderInterface {
 			return $app->redirect( '/category/' . $data['category'] );
 		}
 
-		return $app['twig']->render( 'index_form.twig', array( 'form' => $form->createView() ) );
+		return $app['twig']->render(
+			'index_form.twig',
+			array(
+				'form' => $form->createView()
+			)
+		);
 	}
 
 }

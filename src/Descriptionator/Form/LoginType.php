@@ -9,7 +9,7 @@ class LoginType extends AbstractType {
 
 	public function buildForm( FormBuilderInterface $builder, array $options ) {
 		$builder
-			->setAction( '/admin/check' )
+			->setAction( '/user/authenticate' )
 			->add( '_username', 'text' )
 			->add( '_password', 'password' )
 			->add( '_csrf_token', 'hidden' );

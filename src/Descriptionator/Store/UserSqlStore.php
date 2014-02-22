@@ -21,7 +21,7 @@ class UserSqlStore implements UserStore {
 				$result['username'],
 				$result['password'],
 				$result['salt'],
-				array(),
+				array( 'ROLE_USER' ),
 				$result['email']
 			);
 

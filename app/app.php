@@ -22,8 +22,12 @@ $app->register( new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__ . '/../templates'
 ) );
 
-$app->get( '/admin/check', function() use ( $app ) {
+$app->get( '/user/authenticate', function() use ( $app ) {
 	return 'check';
+} );
+
+$app->get( '/user/logout', function() use ( $app ) {
+	return 'authenticate';
 } );
 
 $app['userprovider'] = $app->share( function () use ( $app ) {
@@ -33,13 +37,20 @@ $app['userprovider'] = $app->share( function () use ( $app ) {
 $app->register( new Silex\Provider\SecurityServiceProvider(), array(
 	'security.firewalls' => array(
 		'admin' => array(
-			'pattern' => '^/(admin)',
+			'pattern' => '^/',
 			'form' => array(
 				'login_path' => '/login',
-				'check_path' => '/admin/check'
+				'check_path' => '/user/authenticate'
 			),
-			'users' => $app['userprovider']
-		),
+			'logout' => array(
+				'logout_path' => '/user/logout'
+			),
+			'users' => $app['userprovider'],
+			'anonymous' => true
+		)
+	),
+	'security.access_rules' => array(
+		array( '^/user', 'ROLE_USER' )
 	)
 ) );
 

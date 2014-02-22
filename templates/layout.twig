@@ -32,7 +32,13 @@
           </div>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li><a href="{{ app.request.basepath }}/login">Login</a></li>
+              <li>
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			  	<a href="{{ app.request.basepath }}/user/logout">Logout</a>
+				{% else %}
+			  	<a href="{{ app.request.basepath }}/login">Login</a>
+				{% endif %}
+			  </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
