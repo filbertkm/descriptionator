@@ -51,7 +51,7 @@ class ItemController implements ControllerProviderInterface {
 	}
 
 	private function getItemData( Application $app, $id ) {
-		$repo = WikiFactory::newWiki( $app['wikis'], 'wikidatawiki' );
+		$repo = WikiFactory::newWiki( $app['wikis'], 'testrepo' );
 		$wiki = WikiFactory::newWiki( $app['wikis'], 'enwiki' );
 
 		$itemLookup = new ItemApiLookup( $repo );

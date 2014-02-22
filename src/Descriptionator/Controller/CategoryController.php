@@ -46,7 +46,7 @@ class CategoryController implements ControllerProviderInterface {
 	}
 
 	private function getItemsForPages( $wikis, $pages ) {
-		$repo = WikiFactory::newWiki( $wikis, 'wikidatawiki' );
+		$repo = WikiFactory::newWiki( $wikis, 'testrepo' );
 		$itemLookup = new ItemApiLookup( $repo );
 		$items = $itemLookup->getItemsBySiteLinks( $pages, 'enwiki' );
 
