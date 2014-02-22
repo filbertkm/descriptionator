@@ -6,43 +6,62 @@ use Descriptionator\Store\UserSqlStore;
 use Descriptionator\User\User;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
 
 class RegisterController implements ControllerProviderInterface {
 
 	public function connect( Application $app ) {
 		$controller = $app['controllers_factory'];
 
-		$controller->match( '/', array( $this, 'form' ) );
+		$controller->match( '/', array( $this, 'registerForm' ) );
 
 		return $controller;
 	}
 
-	public function form( Application $app ) {
+	public function registerForm( Application $app ) {
+		$form = $this->buildForm( $app );
+		$form->handleRequest( $app['request'] );
+
+		if ( $form->isValid() ) {
+			$user = $this->processForm( $app, $form );
+
+			if ( $user ) {
+				return $app->redirect( '/user/' . $user->getUsername() );
+			}
+		}
+
+		return $app['twig']->render( 'register_form.twig', array( 'form' => $form->createView() ) );
+	}
+
+	private function buildForm( Application $app ) {
 		$data = array(
 			'username' => '',
-			'password' => ''
+			'password' => '',
+			'email' => ''
 		);
 
-		$form = $app['form.factory']->createBuilder( 'form', $data )
+		return $app['form.factory']->createBuilder( 'form', $data )
 			->add( 'username', 'text' )
 			->add( 'password', 'password' )
 			->add( 'email', 'email' )
 			->getForm();
+	}
 
-		$form->handleRequest( $app['request'] );
+	private function processForm( Application $app, Form $form ) {
+		$data = $form->getData();
+		$userStore = new UserSqlStore( $app );
+		$user = new User( $data['username'], $data['password'], '', array(), $data['email'] );
 
-		if ( $form->isValid() ) {
-			$data = $form->getData();
-			$userStore = new UserSqlStore( $app );
-			$user = new User( $data['username'], $data['password'], '', array(), $data['email'] );
-			$result = $userStore->addUser( $user );
+		try {
+			$userStore->addUser( $user );
+		} catch ( \Exception $ex ) {
+			$form->addError( new FormError( $ex->getMessage() ) );
 
-			var_export( $result );
-
-//			return $app->redirect( '/category/' . $data['category'] );
+			return false;
 		}
 
-		return $app['twig']->render( 'register_form.twig', array( 'form' => $form->createView() ) );
+		return $user;
 	}
 
 }
