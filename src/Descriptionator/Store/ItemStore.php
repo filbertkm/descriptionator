@@ -19,7 +19,7 @@ class ItemStore {
 			array(
 				'action' => 'wbsetdescription',
 				'id' => $itemId,
-				'summary' => 'setting description',
+				'summary' => 'setting description to "' . $description . '"',
 				'language' => 'en',
 				'value' => $description,
 			)
