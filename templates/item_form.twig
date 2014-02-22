@@ -6,11 +6,12 @@
 <div id="description">
 {{ form_start(form, { 'attr': { 'id': 'item-edit' }}) }}
 {% if description %}
-{{ form_widget(form._description, { 'attr' : { 'placeholder' : description, 'class' : 'form-control' } }) }}
+{{ form_widget(form._description, { 'attr' : { 'class' : 'form-control' } }) }}
 {% else %}
 {{ form_widget(form._description, { 'attr' : { 'placeholder' : 'add description', 'class' : 'form-control' } }) }}
 {% endif %}
 {{ form_end(form) }}
+<span class="cancel-edit">[<a href="{{ app.request.basepath }}/item/{{ id }}">cancel edit</a>]</span>
 </div>
 <div id="snippet">{{ snippet|raw }}</div>
 

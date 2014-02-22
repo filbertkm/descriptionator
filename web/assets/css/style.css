@@ -22,17 +22,21 @@ div#description {
   padding: 1em 2em 0;
 }
 
-#item-edit #_description {
+#item-edit #_description,
+.desc-text {
   max-width: 600px;
+  float: left;
 }
 
 div#snippet {
-  margin-top: 2em;
+  margin-top: 4.5em;
   padding: 1.5em;
   background: #eee;
   width: 350px;
 }
 
-span.edit-link {
+span.edit-link,
+span.cancel-edit {
+  float: left;
   margin-left: .6em;
 }

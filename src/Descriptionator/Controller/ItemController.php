@@ -28,7 +28,7 @@ class ItemController implements ControllerProviderInterface {
 		$itemData = $this->getItemData( $app, $id );
 
 		$data = array(
-			'_description' => ''
+			'_description' => $itemData['description']
 		);
 
 		// type, data, options
