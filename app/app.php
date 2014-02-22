@@ -58,7 +58,6 @@ $app['security.encoder.digest'] = $app->share( function( $app ) {
 	return new Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder( 15 );
 });
 
-
 $app['mwuser'] = $app->share( function() use ( $mwuser ) {
 	return $mwuser;
 });
@@ -77,5 +76,10 @@ $app['oauth.request'] = $app->share( function() use ( $config ) {
 
 require_once __DIR__ . '/wiki.php';
 require_once __DIR__ . '/routes.php';
+
+$app['wikidata.itemstore'] = $app->share( function( $app ) {
+	$repo = WikiClient\MediaWiki\WikiFactory::newWiki( $app['wikis'], 'testrepo' );
+	return new Descriptionator\Store\ItemStore( $repo );
+});
 
 $app['debug'] = true;

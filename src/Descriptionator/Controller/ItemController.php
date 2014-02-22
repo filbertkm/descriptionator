@@ -10,6 +10,7 @@ use Descriptionator\Wikidata\ItemApiLookup;
 use Descriptionator\Wikidata\ItemDeserializer;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use WikiClient\MediaWiki\WikiFactory;
 
@@ -19,6 +20,7 @@ class ItemController implements ControllerProviderInterface {
 		$controller = $app['controllers_factory'];
 
 		$controller->get( '/{id}/edit/', array( $this, 'edit' ) );
+		$controller->post( '/{id}/edit/', array( $this, 'edit' ) );
 		$controller->get( '/{id}/', array( $this, 'view' ) );
 
 		return $controller;
@@ -31,8 +33,16 @@ class ItemController implements ControllerProviderInterface {
 			'_description' => $itemData['description']
 		);
 
-		// type, data, options
 		$form = $app['form.factory']->create( new ItemType(), $data, array() );
+
+		$form->handleRequest( $app['request'] );
+
+		if ( $form->isValid() ) {
+			$result = $this->processForm( $app, $form, $id );
+
+			return $app->redirect( "/item/$id" );
+		}
+
 		$params = array_merge(
 			array( 'form' => $form->createView() ),
 			$itemData
@@ -48,6 +58,13 @@ class ItemController implements ControllerProviderInterface {
 			'item.twig',
 			$itemData
 		);
+	}
+
+	private function processForm( Application $app, Form $form, $id ) {
+		$data = $form->getData();
+
+		$itemStore = $app['wikidata.itemstore'];
+		$itemStore->saveDescription( $id, $data['_description'] );
 	}
 
 	private function getItemData( Application $app, $id ) {
