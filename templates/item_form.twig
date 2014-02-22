@@ -1,0 +1,17 @@
+{% extends 'layout.twig' %}
+
+{% block h1 %}{{ id }}{% endblock %}
+{% block main %}
+<h2 id="label">{{ label }}</h2>
+<div id="description">
+{{ form_start(form, { 'attr': { 'id': 'item-edit' }}) }}
+{% if description %}
+{{ form_widget(form._description, { 'attr' : { 'placeholder' : description, 'class' : 'form-control' } }) }}
+{% else %}
+{{ form_widget(form._description, { 'attr' : { 'placeholder' : 'add description', 'class' : 'form-control' } }) }}
+{% endif %}
+{{ form_end(form) }}
+</div>
+<div id="snippet">{{ snippet|raw }}</div>
+
+{% endblock %}
