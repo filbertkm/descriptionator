@@ -23,14 +23,8 @@ class CategoryController implements ControllerProviderInterface {
 	}
 
 	public function members( Application $app, $catname ) {
-		$categoryMemberLookup = new CategoryMemberApiLookup();
-		$wiki = WikiFactory::newWiki( $app['wikis'], 'enwiki' );
-		$pages = $categoryMemberLookup->find( $catname, $wiki );
-
-		$repo = WikiFactory::newWiki( $app['wikis'], 'wikidatawiki' );
-		$itemLookup = new ItemApiLookup( $repo );
-		$items = $itemLookup->getItemsBySiteLinks( $pages, 'enwiki' );
-
+		$pages = $this->getPages( $app['wikis'], $catname );
+		$items = $this->getItemsForPages( $app['wikis'], $pages );
 		$itemList = $this->buildItemList( $items );
 		$itemData = $this->buildItemData( $itemList );
 
@@ -41,6 +35,22 @@ class CategoryController implements ControllerProviderInterface {
 				'items' => $itemData
 			)
 		);
+	}
+
+	private function getPages( $wikis, $catname ) {
+		$categoryMemberLookup = new CategoryMemberApiLookup();
+		$wiki = WikiFactory::newWiki( $wikis, 'enwiki' );
+		$pages = $categoryMemberLookup->find( $catname, $wiki );
+
+		return $pages;
+	}
+
+	private function getItemsForPages( $wikis, $pages ) {
+		$repo = WikiFactory::newWiki( $wikis, 'wikidatawiki' );
+		$itemLookup = new ItemApiLookup( $repo );
+		$items = $itemLookup->getItemsBySiteLinks( $pages, 'enwiki' );
+
+		return $items;
 	}
 
 	private function buildItemList( $items ) {
