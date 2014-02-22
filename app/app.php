@@ -50,8 +50,8 @@ $app->register( new Silex\Provider\SecurityServiceProvider(), array(
 		)
 	),
 	'security.access_rules' => array(
-		array( '^/user', 'ROLE_USER' ),
-		array( '^/item/Q([\d]+)/edit', 'ROLE_USER' )
+		array( '^/user', 'ROLE_USER' )
+//		array( '^/item/Q([\d]+)/edit', 'ROLE_USER' )
 	)
 ) );
 
@@ -78,12 +78,22 @@ $app['oauth.request'] = $app->share( function() use ( $config ) {
 require_once __DIR__ . '/wiki.php';
 require_once __DIR__ . '/routes.php';
 
+$app['oauth.user'] = $app->share( function( $app ) {
+	$token = $app['session']->get( 'oauth_token' );
+	$userStore = new Descriptionator\Store\UserSqlStore( $app );
+
+	$user = $userStore->getUserByToken( $token );
+
+	return $user;
+});
+
 $app['wikidata.itemstore'] = $app->share( function( $app ) {
-	$token = $app['security']->getToken();
-	$user = $token ? $token->getUser() : null;
+	$token = $app['session']->get( 'oauth_token' );
+	$userStore = new Descriptionator\Store\UserSqlStore( $app );
+	$user = $userStore->getUserByToken( $token );
 
 	$repo = WikiClient\MediaWiki\WikiFactory::newWiki( $app['wikis'], 'testrepo', $user );
-	return new Descriptionator\Store\ItemStore( $repo );
+	return new Descriptionator\Store\ItemStore( $app, $repo );
 });
 
 $app['config'] = $config;

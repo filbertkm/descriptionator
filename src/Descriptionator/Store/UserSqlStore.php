@@ -35,6 +35,13 @@ class UserSqlStore implements UserStore {
 		return null;
 	}
 
+	public function getUserByToken( $token ) {
+		$sql = "SELECT * FROM users where oauthtoken = ?";
+		$result = $this->app['db']->fetchAssoc( $sql, array( $token ) );
+
+		return $this->getUser( $result['username'] );
+	}
+
 	public function getUserById( $id ) {
 
 	}

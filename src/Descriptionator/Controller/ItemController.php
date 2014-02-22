@@ -40,7 +40,7 @@ class ItemController implements ControllerProviderInterface {
 		if ( $form->isValid() ) {
 			$result = $this->processForm( $app, $form, $id );
 
-			return $app->redirect( "/item/$id" );
+//			return $app->redirect( "/item/$id" );
 		}
 
 		$params = array_merge(

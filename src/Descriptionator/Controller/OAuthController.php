@@ -50,6 +50,9 @@ class OAuthController implements ControllerProviderInterface {
 				'uiprop' => 'email'
 			);
 
+			$app['session']->set( 'oauth_token', $result['key'] );
+			$app['session']->set( 'oauth_secret', $result['secret'] );
+
 			$userJson = $app['oauth.request']->request( $wiki, $apiParams, 'post', $result['key'], $result['secret'] );
 			$userData = json_decode( $userJson, true );
 
