@@ -17,7 +17,7 @@ class CategoryController implements ControllerProviderInterface {
 	public function connect( Application $app ) {
 		$controller = $app['controllers_factory'];
 
-		$controller->get( '/{catname}', array( $this, 'members' ) );
+		$controller->get( '/{catname}/', array( $this, 'members' ) );
 
 		return $controller;
 	}

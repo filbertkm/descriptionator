@@ -11,8 +11,8 @@ class UserController implements ControllerProviderInterface {
 	public function connect( Application $app ) {
 		$controller = $app['controllers_factory'];
 
-		$controller->match( '/authenticate', array( $this, 'authenticate' ) );
-		$controller->match( '/logout', array( $this, 'logout' ) );
+		$controller->match( '/authenticate/', array( $this, 'authenticate' ) );
+		$controller->match( '/logout/', array( $this, 'logout' ) );
 		$controller->match( '/', array( $this, 'index' ) );
 
 		return $controller;
