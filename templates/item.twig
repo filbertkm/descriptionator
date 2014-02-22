@@ -8,7 +8,8 @@
 {{ description }}
 {% else %}
 add description
-{% endif %}</div>
+{% endif %}
+<span class="edit-link">[<a href="{{ app.request.basepath }}/item/{{ id }}/edit">edit</a>]</span></div>
 <div id="snippet">{{ snippet|raw }}</div>
 
 {% endblock %}

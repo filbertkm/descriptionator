@@ -19,7 +19,11 @@ h2#label {
 }
 
 div#description {
-  padding: 0 2em;
+  padding: 1em 2em 0;
+}
+
+#item-edit #_description {
+  max-width: 600px;
 }
 
 div#snippet {
@@ -27,4 +31,8 @@ div#snippet {
   padding: 1.5em;
   background: #eee;
   width: 350px;
+}
+
+span.edit-link {
+  margin-left: .6em;
 }
