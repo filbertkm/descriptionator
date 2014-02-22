@@ -25,6 +25,7 @@ div#description {
 #item-edit #_description,
 .desc-text {
   max-width: 600px;
+  margin-right: 1em;
   float: left;
 }
 
@@ -35,8 +36,7 @@ div#snippet {
   width: 350px;
 }
 
-span.edit-link,
-span.cancel-edit {
+span.edit-link {
   float: left;
   margin-left: .6em;
 }

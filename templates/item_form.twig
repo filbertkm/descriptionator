@@ -10,8 +10,8 @@
 {% else %}
 {{ form_widget(form._description, { 'attr' : { 'placeholder' : 'add description', 'class' : 'form-control' } }) }}
 {% endif %}
+<button type="submit" class="btn btn-large btn-primary">Save</button>
 {{ form_end(form) }}
-<span class="cancel-edit">[<a href="{{ app.request.basepath }}/item/{{ id }}">cancel edit</a>]</span>
 </div>
 <div id="snippet">{{ snippet|raw }}</div>
 
