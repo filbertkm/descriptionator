@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descriptionator</title>
     <link href="{{ app.request.basepath }}/assets/css/jquery-ui.css" rel="stylesheet">
-	<link href="{{ app.request.basepath }}/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ app.request.basepath }}/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ app.request.basepath }}/assets/css/bootstrap-theme.min.css" rel="stylesheet">
-	<link href="{{ app.request.basepath }}/assets/css/sticky-footer-navbar.css" rel="stylesheet">
-	<link href="{{ app.request.basepath }}/assets/css/style.css" rel="stylesheet">
-	{% block cssstyles %}{% endblock %}
+  <link href="{{ app.request.basepath }}/assets/css/sticky-footer-navbar.css" rel="stylesheet">
+  <link href="{{ app.request.basepath }}/assets/css/style.css" rel="stylesheet">
+  {% block cssstyles %}{% endblock %}
     <!--[if lt IE 9]>
       <script src="{{ app.request.basepath }}/assets/js/html5shiv.js"></script>
       <script src="{{ app.request.basepath }}/assets/js/respond.min.js"></script>
@@ -33,12 +33,12 @@
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <li>
-				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			  	<a href="{{ app.request.basepath }}/user/logout">Logout</a>
-				{% else %}
-			  	<a href="{{ app.request.basepath }}/login">Login</a>
-				{% endif %}
-			  </li>
+              {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ app.request.basepath }}/user/logout">Logout</a>
+              {% else %}
+                <a href="{{ app.request.basepath }}/login">Login</a>
+              {% endif %}
+              </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -46,11 +46,11 @@
       <div class="container">
         {% block main %}{% endblock %}
       </div>
-  	</div>
+    </div>
     <div id="footer">
       <div class="container">
         <ul class="nav navbar-nav">
-	      <li><a href="#about">About</a></li>
+        <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
