@@ -9,6 +9,7 @@ use Silex\ControllerProviderInterface;
 use WikiClient\HttpClient;
 use WikiClient\MediaWiki\ApiClient;
 use WikiClient\MediaWiki\WikiFactory;
+use WikiClient\Request;
 
 class OAuthController implements ControllerProviderInterface {
 
@@ -30,18 +31,16 @@ class OAuthController implements ControllerProviderInterface {
 
 		if ( $token && $verifier ) {
 			$url = $oauth->getAuthUrl( $token, $verifier );
-			$client = new HttpClient( '/tmp', '' );
-			$json = $client->get( $url );
+			$client = new HttpClient();
+
+			$request = new Request( 'get', $url );
+			$json = $client->get( $request );
 
 			$result = json_decode( $json, true );
-
-			var_export( $result );
 
 			$user = new User( '', '', '', array(), '' );
 			$user->setOAuthSecret( $result['secret'] );
 			$user->setOAuthToken( $result['key'] );
-
-			var_export( $user );
 
 			$apiParams = array(
 				'action' => 'query',

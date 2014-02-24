@@ -25,6 +25,7 @@ class CategoryController implements ControllerProviderInterface {
 	public function members( Application $app, $catname ) {
 		$pages = $this->getPages( $app['wikis'], $catname );
 		$items = $this->getItemsForPages( $app['wikis'], $pages );
+
 		$itemList = $this->buildItemList( $items );
 		$itemData = $this->buildItemData( $itemList );
 

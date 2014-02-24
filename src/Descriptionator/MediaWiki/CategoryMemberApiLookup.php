@@ -8,7 +8,7 @@ use WikiClient\MediaWiki\Wiki;
 class CategoryMemberApiLookup implements CategoryMemberLookup {
 
 	public function find( $cat, Wiki $wiki ) {
-		$client = new ApiClient( $wiki, '/tmp/' );
+		$client = new ApiClient( $wiki );
 
 		$params = $client->buildParams(
 			array(
@@ -21,7 +21,9 @@ class CategoryMemberApiLookup implements CategoryMemberLookup {
 			)
 		);
 
-		$data = json_decode( $client->get( $params ), true );
+		$result = $client->get( $params );
+		$data = json_decode( $result, true );
+
 		$pages = array();
 
 		foreach( $data['query']['categorymembers'] as $member ) {
