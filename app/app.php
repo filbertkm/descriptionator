@@ -59,10 +59,6 @@ $app['security.encoder.digest'] = $app->share( function( $app ) {
 	return new Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder( 15 );
 });
 
-$app['mwuser'] = $app->share( function() use ( $mwuser ) {
-	return $mwuser;
-});
-
 $app['watchlist'] = $app->share( function() {
 	return new Descriptionator\MediaWiki\Watchlist;
 });
