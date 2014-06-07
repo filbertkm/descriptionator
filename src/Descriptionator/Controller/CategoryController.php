@@ -9,6 +9,9 @@ use Descriptionator\Wikidata\ItemDeserializer;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Wikibot\CategoryMemberFinder;
+use Wikibot\Wikibase\ItemLookup;
+use Wikibot\Wikibase\ItemsByCategoryFinder;
 use WikiClient\MediaWiki\User;
 use WikiClient\MediaWiki\WikiFactory;
 
@@ -23,11 +26,15 @@ class CategoryController implements ControllerProviderInterface {
 	}
 
 	public function members( Application $app, $catname ) {
-		$pages = $this->getPages( $app['wikis'], $catname );
-		$items = $this->getItemsForPages( $app['wikis'], $pages );
+		$client = $app['apiclient'];
 
-		$itemList = $this->buildItemList( $items );
-		$itemData = $this->buildItemData( $itemList );
+		$catMemberFinder = new CategoryMemberFinder( $client( 'enwiki' ) );
+		$itemLookup = new ItemLookup( $client( 'wikidatawiki' ), $app['entity-deserializer'] );
+
+		$itemsByCatFinder = new ItemsByCategoryFinder( $catMemberFinder, $itemLookup );
+		$items = $itemsByCatFinder->getItemsForCategory( $catname );
+
+		$itemData = $this->buildItemData( $items );
 
 		return $app['twig']->render(
 			'category_list.twig',
@@ -36,48 +43,6 @@ class CategoryController implements ControllerProviderInterface {
 				'items' => $itemData
 			)
 		);
-	}
-
-	private function getPages( $wikis, $catname ) {
-		$categoryMemberLookup = new CategoryMemberApiLookup();
-		$wiki = WikiFactory::newWiki( $wikis, 'enwiki' );
-		$pages = $categoryMemberLookup->find( $catname, $wiki );
-
-		return $pages;
-	}
-
-	private function getItemsForPages( $wikis, $pages ) {
-		$repo = WikiFactory::newWiki( $wikis, 'testrepo' );
-		$itemLookup = new ItemApiLookup( $repo );
-		$items = $itemLookup->getItemsBySiteLinks( $pages, 'enwiki' );
-
-		return $items;
-	}
-
-	private function buildItemList( $items ) {
-		$itemList = array();
-
-		$deserializer = new ItemDeserializer();
-
-		foreach( $items as $item ) {
-			if ( !array_key_exists( 'missing', $item ) ) {
-				$itemList[] = $deserializer->deserialize( $item );
-			}
-		}
-
-		return $itemList;
-	}
-
-	private function buildMissingList( $items ) {
-		$missing = array();
-
-		foreach( $items as $item ) {
-			if ( array_key_exists( 'missing', $item ) ) {
-				$missing[] = $item;
-			}
-		}
-
-		return $missing;
 	}
 
 	private function buildItemData( array $items ) {

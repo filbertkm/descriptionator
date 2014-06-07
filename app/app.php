@@ -3,6 +3,16 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/config.php';
 
+$dataValueMap = array(
+	'globecoordinate' => 'DataValues\GlobeCoordinateValue',
+	'monolingualtext' => 'DataValues\MonolingualTextValue',
+	'multilingualtext' => 'DataValues\MultilingualTextValue',
+	'quantity' => 'DataValues\QuantityValue',
+	'time' => 'DataValues\TimeValue',
+	'wikibase-entityid' => 'Wikibase\DataModel\Entity\EntityIdValue',
+	'string' => 'DataValues\StringValue'
+);
+
 $app = new Silex\Application();
 
 $app->register( new Silex\Provider\FormServiceProvider() );
@@ -12,10 +22,27 @@ $app->register( new Silex\Provider\TranslationServiceProvider(), array(
 	'translator.messages' => array(),
 ) );
 
+$app['wikiprovider'] = function( $app ) use( $wikis ) {
+	return new WikiClient\MediaWiki\WikiFactory( $wikis );
+};
+
+$app['apiclient'] = function( $app ) use ( $wikis ) {
+	return function( $siteId ) use( $app, $wikis ) {
+		$wiki = $app['wikiprovider']->newWiki( $siteId );
+
+		$userInfo = $wikis[$siteId]['user'];
+		$user = new WikiClient\MediaWiki\User(
+			$userInfo['username'],
+			$userInfo['password'],
+			$wikis[$siteId]
+		);
+
+		return new WikiClient\MediaWiki\ApiClient( $wiki, $user );
+	};
+};
+
 $app->register( new Silex\Provider\DoctrineServiceProvider(), array(
-	'dbs.options' => array(
-		'db' => $dbParams
-	)
+	'dbs.options' => $dbOptions
 ) );
 
 $app->register( new Silex\Provider\TwigServiceProvider(), array(
@@ -63,15 +90,14 @@ $app['watchlist'] = $app->share( function() {
 	return new Descriptionator\MediaWiki\Watchlist;
 });
 
-$app['oauth'] = $app->share( function( $app ) use ( $config ) {
-	return new WikiClient\OAuth\OAuth( $config, $app );
+$app['oauth'] = $app->share( function( $app ) use ( $oauthConfig ) {
+	return new WikiClient\OAuth\OAuth( $oauthConfig, $app );
 });
 
-$app['oauth.request'] = $app->share( function() use ( $config ) {
-	return new WikiClient\OAuth\OAuthRequest( $config );
+$app['oauth.request'] = $app->share( function() use ( $oauthConfig ) {
+	return new WikiClient\OAuth\OAuthRequest( $oauthConfig );
 });
 
-require_once __DIR__ . '/wiki.php';
 require_once __DIR__ . '/routes.php';
 
 $app['oauth.user'] = $app->share( function( $app ) {
@@ -92,6 +118,15 @@ $app['wikidata.itemstore'] = $app->share( function( $app ) {
 	return new Descriptionator\Store\ItemStore( $app, $repo );
 });
 
-$app['config'] = $config;
+$app['deserializer-factory'] = function() use ( $dataValueMap ) {
+	return new Wikibase\DataModel\DeserializerFactory(
+		new DataValues\Deserializers\DataValueDeserializer( $dataValueMap ),
+		new Wikibase\DataModel\Entity\BasicEntityIdParser()
+	);
+};
+
+$app['entity-deserializer'] = function( $app ) {
+	return $app['deserializer-factory']->newEntityDeserializer();
+};
 
 $app['debug'] = true;
