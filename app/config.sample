@@ -1,0 +1,26 @@
+<?php
+
+$dbOptions = array(
+	'driver'	=> 'pdo_mysql',
+	'host'	  => 'localhost',
+	'dbname'	=> 'my_database',
+	'user'	  => 'my_username',
+	'password'  => 'my_password',
+	'charset'   => 'utf8',
+);
+
+$oauthConfig = array();
+
+$users = array(
+	'wikimedia' => array(
+		'username' => 'bot',
+		'password' => 'botpassword'
+	),
+);
+
+$wikis = array(
+	'enwiki' => array(
+		'api' => 'https://en.wikipedia.org/w/api.php',
+		'user' => $users['wikimedia']
+	)
+);
