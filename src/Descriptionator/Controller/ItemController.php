@@ -12,6 +12,7 @@ use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Wikibot\Wikibase\ItemLookup;
 use WikiClient\MediaWiki\WikiFactory;
 
 class ItemController implements ControllerProviderInterface {
@@ -67,17 +68,18 @@ class ItemController implements ControllerProviderInterface {
 		$itemStore->saveDescription( $id, $data['_description'] );
 	}
 
-	private function getItemData( Application $app, $id ) {
-		$repo = WikiFactory::newWiki( $app['wikis'], 'testrepo' );
-		$wiki = WikiFactory::newWiki( $app['wikis'], 'enwiki' );
+	private function getItemData( Application $app, $itemId ) {
+		$client = $app['apiclient'];
+		$repo = $client( 'wikidatawiki' );
+		$wiki = $client( 'enwiki' );
 
-		$itemLookup = new ItemApiLookup( $repo );
-		$item = $itemLookup->getItem( $id );
+		$itemLookup = new ItemLookup( $repo, $app['entity-deserializer'] );
+		$item = $itemLookup->getItem( $itemId );
 
 		$siteLink = $item->getSiteLink( 'enwiki' );
 		$siteLinkPage = $siteLink->getPageName();
 
-		$pageStore = new WikitextPageStore();
+		$pageStore = new WikitextPageStore( $wiki );
 		$page = new WikitextPage( $siteLinkPage );
 
 		$itemData = array(
@@ -85,7 +87,7 @@ class ItemController implements ControllerProviderInterface {
 			'label' => $item->getLabel( 'en' ),
 			'description' => $item->getDescription( 'en' ),
 			'page' => $siteLinkPage,
-			'snippet' => $pageStore->getSnippet( $page, $wiki )
+			'snippet' => $pageStore->getSnippet( $page, 'enwiki' )
 		);
 
 		return $itemData;

@@ -7,19 +7,27 @@ use WikiClient\MediaWiki\Wiki;
 
 class WikitextPageStore {
 
-	public function getSnippet( WikitextPage $page, Wiki $wiki ) {
-		$client = new ApiClient( $wiki, '/tmp/' );
+	/**
+	 * @var ApiClient
+	 */
+	private $client;
 
-		$params = $client->buildParams(
-			array(
-				'action' => 'query',
-				'prop' => 'extracts',
-				'exchars' => 300,
-				'titles' => $page->getName()
-			)
+	/**
+	 * @param ApiClient $client
+	 */
+	public function __construct( ApiClient $client ) {
+		$this->client = $client;
+	}
+
+	public function getSnippet( WikitextPage $page  ) {
+		$params = array(
+			'action' => 'query',
+			'prop' => 'extracts',
+			'exchars' => 300,
+			'titles' => $page->getName()
 		);
 
-		$data = json_decode( $client->get( $params ), true );
+		$data = json_decode( $this->client->get( $params ), true );
 
 		foreach( $data['query']['pages'] as $pageItem ) {
 			$sections = explode( '<h2>', $pageItem['extract'] );
