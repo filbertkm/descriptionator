@@ -18,7 +18,8 @@ $app->get( '/wiki/', function() use ( $app ) {
 	return $oauth->authorize();
 });
 
-$app->mount( '/category', new Descriptionator\Controller\CategoryController() );
+$app->mount( '/browse', new Descriptionator\Controller\BrowseController() );
+$app->mount( '/describe', new Descriptionator\Controller\DescribeController() );
 $app->mount( '/item', new Descriptionator\Controller\ItemController() );
 $app->mount( '/login', new Descriptionator\Controller\LoginController() );
 $app->mount( '/oauth', new Descriptionator\Controller\OAuthController() );
