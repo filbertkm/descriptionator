@@ -5,12 +5,15 @@
 {% if items|length == 0 %}
 Items not found.
 {% else %}
-<table id="category-list">
+<table class="table" id="category-list">
+<thead>
 <tr>
 <th>Item</th>
 <th>Wikipedia</th>
 <th>Details</th>
 </tr>
+</thead>
+<tbody>
 {% for item in items %}
 <tr id="{{ item.id }}">
 <td><a href="https://www.wikidata.org/wiki/{{ item.id }}">{{ item.label }}</a> ({{ item.id }})</td>
@@ -22,6 +25,7 @@ view
 {% endif %}</a></td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
 {% endif %}
 
