@@ -46,7 +46,7 @@ class DescribeController implements ControllerProviderInterface {
 		$itemLookup = new ItemLookup( $client( 'wikidatawiki' ), $app['entity-deserializer'] );
 		$itemFinder = new ItemsWithoutDescriptionFinder( $client( 'enwiki' ), $itemLookup );
 
-		$items = $itemFinder->getItems( $catname, 'enwiki', 'en' );
+		$items = $itemFinder->getItems( $catname, 'enwiki', 'en', 50 );
 
 		return $items;
 	}
