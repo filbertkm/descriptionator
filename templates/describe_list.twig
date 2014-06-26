@@ -1,0 +1,28 @@
+{% extends 'layout.twig' %}
+
+{% block h1 %}Category members{% endblock %}
+{% block main %}
+{% if items|length == 0 %}
+Items not found.
+{% else %}
+<table id="category-list">
+<tr>
+<th>Item</th>
+<th>Wikipedia</th>
+<th>Details</th>
+</tr>
+{% for item in items %}
+<tr id="{{ item.id }}">
+<td><a href="https://www.wikidata.org/wiki/{{ item.id }}">{{ item.label }}</a> ({{ item.id }})</td>
+<td><a href="https://en.wikipedia.org/wiki/{{ item.page }}">Wikipedia</a></td>
+<td><a href="/item/{{ item.id }}">{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+edit
+{% else %}
+view
+{% endif %}</a></td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

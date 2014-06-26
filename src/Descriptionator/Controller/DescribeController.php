@@ -32,7 +32,7 @@ class DescribeController implements ControllerProviderInterface {
 		$itemData = $this->buildItemData( $items );
 
 		return $app['twig']->render(
-			'category_list.twig',
+			'describe_list.twig',
 			array(
 				'pages' => array(),
 				'items' => $itemData
