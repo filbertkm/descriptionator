@@ -28,7 +28,7 @@ class IndexController implements ControllerProviderInterface {
 
 		if ( $form->isValid() ) {
 			$data = $form->getData();
-			return $app->redirect( '/category/' . $data['category'] );
+			return $app->redirect( '/describe/' . $data['category'] );
 		}
 
 		return $app['twig']->render(
