@@ -23,7 +23,7 @@ class DescribeController implements ControllerProviderInterface {
 	}
 
 	public function membersWithNoDescription( Application $app, $catname ) {
-		$items = $this->getItemsWithNoDescription( $app, $catname );
+		$items = $this->getItemsWithNoDescription( $app, $catname, 50 );
 
 		return $this->buildRendering( $app, $items );
 	}
@@ -40,13 +40,13 @@ class DescribeController implements ControllerProviderInterface {
 		);
 	}
 
-	private function getItemsWithNoDescription( $app, $catname ) {
+	private function getItemsWithNoDescription( $app, $catname, $limit ) {
 		$client = $app['apiclient'];
 
 		$itemLookup = new ItemLookup( $client( 'wikidatawiki' ), $app['entity-deserializer'] );
 		$itemFinder = new ItemsWithoutDescriptionFinder( $client( 'enwiki' ), $itemLookup );
 
-		$items = $itemFinder->getItems( $catname, 'enwiki', 'en', 50 );
+		$items = $itemFinder->getItems( $catname, 'enwiki', 'en', $limit );
 
 		return $items;
 	}
