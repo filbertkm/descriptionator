@@ -8,6 +8,7 @@ Items not found.
 <table class="table" id="category-list">
 <thead>
 <tr>
+<th></th>
 <th>Item</th>
 <th>Wikipedia</th>
 <th>Details</th>
@@ -16,6 +17,7 @@ Items not found.
 <tbody>
 {% for item in items %}
 <tr id="{{ item.id }}">
+<td>{{ loop.index }}</td>
 <td><a href="https://www.wikidata.org/wiki/{{ item.id }}">{{ item.label }}</a> ({{ item.id }})</td>
 <td><a href="https://en.wikipedia.org/wiki/{{ item.page }}">Wikipedia</a></td>
 <td><a href="/item/{{ item.id }}">{% if is_granted('IS_AUTHENTICATED_FULLY') %}
