@@ -1,12 +1,14 @@
 <?php
 
 $dbOptions = array(
-	'driver'	=> 'pdo_mysql',
-	'host'	  => 'localhost',
-	'dbname'	=> 'my_database',
-	'user'	  => 'my_username',
-	'password'  => 'my_password',
-	'charset'   => 'utf8',
+	'db' => array(
+		'driver'	=> 'pdo_mysql',
+		'host'	  => 'localhost',
+		'dbname'	=> 'my_database',
+		'user'	  => 'my_username',
+		'password'  => 'my_password',
+		'charset'   => 'utf8',
+	)
 );
 
 $oauthConfig = array();
