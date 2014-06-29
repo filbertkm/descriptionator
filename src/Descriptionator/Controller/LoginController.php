@@ -28,7 +28,8 @@ class LoginController implements ControllerProviderInterface {
 		return $app['twig']->render(
 			'login_form.twig',
 			array(
-				'form' => $form->createView()
+				'form' => $form->createView(),
+				'error' => $app['security.last_error']( $app['request'] )
 			)
 		);
 	}

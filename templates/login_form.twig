@@ -6,9 +6,10 @@
   <div class="row">
     {{ form_start(form, { 'attr': { 'id': 'login-form' }}) }}
     <h3 class="heading-desc">Login</h3>
-    <div class="main">
-      {{ form_widget(form._username, { 'attr' : { 'placeholder' : 'username', 'class' : 'form-control' } }) }}
-      {{ form_widget(form._password, { 'attr' : { 'placeholder' : 'password', 'class' : 'form-control' } }) }}
+	<div class="main">
+      <span class="error">{{ error }}</span>
+	  {{ form_widget(form._username, { 'attr' : { 'placeholder' : 'username', 'class' : 'form-control' } }) }}
+	  {{ form_widget(form._password, { 'attr' : { 'placeholder' : 'password', 'class' : 'form-control' } }) }}
       <span class="clearfix"></span>
     </div>
     <div class="login-footer">
