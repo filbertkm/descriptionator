@@ -6,15 +6,15 @@ use Descriptionator\User\User;
 
 class UserSqlStore implements UserStore {
 
-	protected $app;
+	protected $db;
 
-	public function __construct( $app ) {
-		$this->app = $app;
+	public function __construct( $db ) {
+		$this->db = $db;
 	}
 
 	public function getUser( $username ) {
 		$sql = "SELECT * FROM users where username = ?";
-		$result = $this->app['db']->fetchAssoc( $sql, array( $username ) );
+		$result = $this->db->fetchAssoc( $sql, array( $username ) );
 
 		if ( $result ) {
 			$user = new User(
@@ -37,7 +37,7 @@ class UserSqlStore implements UserStore {
 
 	public function getUserByToken( $token ) {
 		$sql = "SELECT * FROM users where oauthtoken = ?";
-		$result = $this->app['db']->fetchAssoc( $sql, array( $token ) );
+		$result = $this->db->fetchAssoc( $sql, array( $token ) );
 
 		return $this->getUser( $result['username'] );
 	}
@@ -58,7 +58,7 @@ class UserSqlStore implements UserStore {
 			$user->getOAuthSecret()
 		);
 
-		$result = $this->app['db']->executeUpdate( $sql, $params );
+		$result = $this->db->executeUpdate( $sql, $params );
 
 		if ( $result !== 1 ) {
 			throw new \Exception( 'Failed to create user' );

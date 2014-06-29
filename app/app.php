@@ -84,7 +84,14 @@ $app->register( new Silex\Provider\SecurityServiceProvider(), array(
 
 $app['security.encoder.digest'] = $app->share( function( $app ) {
 	return new Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder( 15 );
-});
+} );
+
+$app['user-registration-handler'] = $app->share( function( $app ) {
+	return new Descriptionator\User\UserRegistrationHandler(
+		new Descriptionator\Store\UserSqlStore( $app['db'] ),
+		$app['security.encoder_factory']
+	);
+} );
 
 $app['watchlist'] = $app->share( function() {
 	return new Descriptionator\MediaWiki\Watchlist;
@@ -98,11 +105,9 @@ $app['oauth.request'] = $app->share( function() use ( $oauthConfig ) {
 	return new WikiClient\OAuth\OAuthRequest( $oauthConfig );
 });
 
-require_once __DIR__ . '/routes.php';
-
 $app['oauth.user'] = $app->share( function( $app ) {
 	$token = $app['session']->get( 'oauth_token' );
-	$userStore = new Descriptionator\Store\UserSqlStore( $app );
+	$userStore = new Descriptionator\Store\UserSqlStore( $app['db'] );
 
 	$user = $userStore->getUserByToken( $token );
 
@@ -111,7 +116,7 @@ $app['oauth.user'] = $app->share( function( $app ) {
 
 $app['wikidata.itemstore'] = $app->share( function( $app ) {
 	$token = $app['session']->get( 'oauth_token' );
-	$userStore = new Descriptionator\Store\UserSqlStore( $app );
+	$userStore = new Descriptionator\Store\UserSqlStore( $app['db'] );
 	$user = $userStore->getUserByToken( $token );
 
 	$repo = WikiClient\MediaWiki\WikiFactory::newWiki( $app['wikis'], 'testrepo', $user );
@@ -130,3 +135,5 @@ $app['entity-deserializer'] = function( $app ) {
 };
 
 $app['debug'] = true;
+
+require_once __DIR__ . '/routes.php';

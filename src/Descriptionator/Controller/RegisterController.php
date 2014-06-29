@@ -11,6 +11,12 @@ use Symfony\Component\Form\FormError;
 
 class RegisterController implements ControllerProviderInterface {
 
+	private $regHandler;
+
+	public function __construct( $regHandler ) {
+		$this->regHandler = $regHandler;
+	}
+
 	public function connect( Application $app ) {
 		$controller = $app['controllers_factory'];
 
@@ -49,18 +55,9 @@ class RegisterController implements ControllerProviderInterface {
 	}
 
 	private function processForm( Application $app, Form $form ) {
-		$data = $form->getData();
-		$userStore = new UserSqlStore( $app );
-
-		$salt = '1234567890abcdefghijkl'; // needs to be length 22
-		$user = new User( $data['username'], '', $salt, array(), $data['email'] );
-
-		$encoder = $app['security.encoder_factory']->getEncoder( $user );
-		$user->setPassword( $encoder->encodePassword( $data['password'], $salt ) );
-		$user->setApiPassword( $data['password'] );
-
 		try {
-			$userStore->addUser( $user );
+			$data = $form->getData();
+			$user = $this->regHandler->handle( $data );
 		} catch ( \Exception $ex ) {
 			$form->addError( new FormError( $ex->getMessage() ) );
 

@@ -23,6 +23,10 @@ $app->mount( '/describe', new Descriptionator\Controller\DescribeController() );
 $app->mount( '/item', new Descriptionator\Controller\ItemController() );
 $app->mount( '/login', new Descriptionator\Controller\LoginController() );
 $app->mount( '/oauth', new Descriptionator\Controller\OAuthController() );
-$app->mount( '/register', new Descriptionator\Controller\RegisterController() );
+
+$app->mount( '/register', new Descriptionator\Controller\RegisterController(
+	$app['user-registration-handler']
+) );
+
 $app->mount( '/user', new Descriptionator\Controller\UserController() );
 $app->mount( '/', new Descriptionator\Controller\IndexController() );

@@ -17,7 +17,7 @@ class UserProvider implements UserProviderInterface {
 	}
 
 	public function loadUserByUsername( $username ) {
-		$userStore = new UserSqlStore( $this->app );
+		$userStore = new UserSqlStore( $this->app['db'] );
 		$user = $userStore->getUser( $username );
 
 		if ( !$user ) {

@@ -58,7 +58,7 @@ class OAuthController implements ControllerProviderInterface {
 			$username = $userData['query']['userinfo']['name'];
 			$user->setUsername( $username );
 
-			$userStore = new UserSqlStore( $app );
+			$userStore = new UserSqlStore( $app['db'] );
 			$userStore->addUser( $user );
 
 			return 'connected';
