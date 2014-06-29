@@ -42,9 +42,11 @@ class DescribeController implements ControllerProviderInterface {
 
 	private function getItemsWithNoDescription( $app, $catname, $limit ) {
 		$client = $app['apiclient'];
+		$repo = $client( 'wikidatawiki' );
+		$wiki = $client( 'enwiki' );
 
-		$itemLookup = new ItemLookup( $client( 'wikidatawiki' ), $app['entity-deserializer'] );
-		$itemFinder = new ItemsWithoutDescriptionFinder( $client( 'enwiki' ), $itemLookup );
+		$itemLookup = new ItemLookup( $repo, $app['entity-deserializer'] );
+		$itemFinder = new ItemsWithoutDescriptionFinder( $wiki, $itemLookup );
 
 		$items = $itemFinder->getItems( $catname, 'enwiki', 'en', $limit );
 
