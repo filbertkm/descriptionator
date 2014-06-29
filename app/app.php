@@ -45,10 +45,6 @@ $app->register( new Silex\Provider\DoctrineServiceProvider(), array(
 	'dbs.options' => $dbOptions
 ) );
 
-$app->register( new Silex\Provider\TwigServiceProvider(), array(
-	'twig.path' => __DIR__ . '/../templates'
-) );
-
 $app->get( '/user/authenticate', function() use ( $app ) {
 	return 'check';
 } );
@@ -89,9 +85,16 @@ $app['security.encoder.digest'] = $app->share( function( $app ) {
 $app['user-registration-handler'] = $app->share( function( $app ) {
 	return new Descriptionator\User\UserRegistrationHandler(
 		new Descriptionator\Store\UserSqlStore( $app['db'] ),
-		$app['security.encoder_factory']
+		$app['security.encoder_factory'],
+		$app['security']
 	);
 } );
+
+$app->boot();
+
+$app->register( new Silex\Provider\TwigServiceProvider(), array(
+	'twig.path' => __DIR__ . '/../templates'
+) );
 
 $app['watchlist'] = $app->share( function() {
 	return new Descriptionator\MediaWiki\Watchlist;

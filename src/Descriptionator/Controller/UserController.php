@@ -13,12 +13,17 @@ class UserController implements ControllerProviderInterface {
 
 		$controller->match( '/authenticate/', array( $this, 'authenticate' ) );
 		$controller->match( '/logout/', array( $this, 'logout' ) );
+		$controller->match( '/profile/{user}/', array( $this, 'profile' ) );
 		$controller->match( '/', array( $this, 'index' ) );
 
 		return $controller;
 	}
 
 	public function index( Application $app ) {
+		return $app['twig']->render( 'user_index.twig' );
+	}
+
+	public function profile( Application $app ) {
 		return $app['twig']->render( 'user_index.twig' );
 	}
 

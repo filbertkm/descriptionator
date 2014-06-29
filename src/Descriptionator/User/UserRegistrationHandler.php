@@ -3,6 +3,8 @@
 namespace Descriptionator\User;
 
 use Descriptionator\Store\UserStore;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserRegistrationHandler {
 
@@ -10,9 +12,12 @@ class UserRegistrationHandler {
 
 	private $encoderFactory;
 
-	public function __construct( UserStore $userStore, $encoderFactory ) {
+	private $securityContext;
+
+	public function __construct( UserStore $userStore, $encoderFactory, $securityContext ) {
 		$this->userStore = $userStore;
 		$this->encoderFactory = $encoderFactory;
+		$this->securityContext = $securityContext;
 	}
 
 	public function handle( array $data ) {
@@ -24,8 +29,15 @@ class UserRegistrationHandler {
 		$user->setApiPassword( $data['password'] );
 
 		$this->userStore->addUser( $user );
+		$this->authenticateUser( $user );
 
 		return $user;
+	}
+
+	private function authenticateUser( UserInterface $user ) {
+		$token = new UsernamePasswordToken( $user, null, 'admin', $user->getRoles() );
+
+		$this->securityContext->setToken( $token );
 	}
 
 }

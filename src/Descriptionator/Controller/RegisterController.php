@@ -33,7 +33,7 @@ class RegisterController implements ControllerProviderInterface {
 			$user = $this->processForm( $app, $form );
 
 			if ( $user ) {
-				return $app->redirect( '/user/' . $user->getUsername() );
+				return $app->redirect( '/user/profile/' . $user->getUsername() );
 			}
 		}
 
