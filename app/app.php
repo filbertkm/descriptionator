@@ -45,6 +45,10 @@ $app->register( new Silex\Provider\DoctrineServiceProvider(), array(
 	'dbs.options' => $dbOptions
 ) );
 
+$app->register( new Silex\Provider\TwigServiceProvider(), array(
+	'twig.path' => __DIR__ . '/../templates'
+) );
+
 $app->get( '/user/authenticate', function() use ( $app ) {
 	return 'check';
 } );
@@ -91,10 +95,6 @@ $app['user-registration-handler'] = $app->share( function( $app ) {
 } );
 
 $app->boot();
-
-$app->register( new Silex\Provider\TwigServiceProvider(), array(
-	'twig.path' => __DIR__ . '/../templates'
-) );
 
 $app['watchlist'] = $app->share( function() {
 	return new Descriptionator\MediaWiki\Watchlist;
