@@ -27,7 +27,7 @@ class OAuthController implements ControllerProviderInterface {
 		$token = $app['request']->query->get( 'oauth_token' );
 		$verifier = $app['request']->query->get( 'oauth_verifier' );
 
-		$wiki = WikiFactory::newWiki( $app['wikis'], 'testrepo' );
+		$wiki = $app['wikiprovider']->newWiki( 'testrepo' );
 
 		if ( $token && $verifier ) {
 			$url = $oauth->getAuthUrl( $token, $verifier );

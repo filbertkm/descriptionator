@@ -87,10 +87,13 @@ $app['security.encoder.digest'] = $app->share( function( $app ) {
 } );
 
 $app['user-registration-handler'] = $app->share( function( $app ) {
+	$client = $app['apiclient'];
+
 	return new Descriptionator\User\UserRegistrationHandler(
 		new Descriptionator\Store\UserSqlStore( $app['db'] ),
 		$app['security.encoder_factory'],
-		$app['security']
+		$app['security'],
+		$client( 'wikidatawiki' )
 	);
 } );
 

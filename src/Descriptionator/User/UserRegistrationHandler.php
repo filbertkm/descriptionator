@@ -14,10 +14,15 @@ class UserRegistrationHandler {
 
 	private $securityContext;
 
-	public function __construct( UserStore $userStore, $encoderFactory, $securityContext ) {
+	private $apiClient;
+
+	public function __construct( UserStore $userStore, $encoderFactory, $securityContext,
+		$apiClient
+	) {
 		$this->userStore = $userStore;
 		$this->encoderFactory = $encoderFactory;
 		$this->securityContext = $securityContext;
+		$this->apiClient = $apiClient;
 	}
 
 	public function handle( array $data ) {
@@ -32,6 +37,10 @@ class UserRegistrationHandler {
 		$this->authenticateUser( $user );
 
 		return $user;
+	}
+
+	private function validateApiPassworod( UserInterface $user, $password ) {
+
 	}
 
 	private function authenticateUser( UserInterface $user ) {
