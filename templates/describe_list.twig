@@ -10,7 +10,8 @@ Items not found.
 <tr>
 <th></th>
 <th>Item</th>
-<th>Wikipedia</th>
+<th>Label</th>
+<th>Description</th>
 <th>Details</th>
 </tr>
 </thead>
@@ -18,8 +19,9 @@ Items not found.
 {% for item in items %}
 <tr id="{{ item.id }}">
 <td>{{ loop.index }}</td>
-<td><a href="https://www.wikidata.org/wiki/{{ item.id }}">{{ item.label }}</a> ({{ item.id }})</td>
-<td><a href="https://en.wikipedia.org/wiki/{{ item.page }}">Wikipedia</a></td>
+<td><a href="https://www.wikidata.org/wiki/{{ item.id }}">{{ item.id }}</a></td>
+<td>{{ item.label }}</td>
+<td>{{ item.description }}</td>
 <td><a href="/item/{{ item.id }}">{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 edit
 {% else %}
