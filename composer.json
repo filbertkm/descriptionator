@@ -1,35 +1,44 @@
 {
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/filbertkm/WikiClient.git"
-		},
-		{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/filbertkm/WikiClient.git"
+        },
+        {
             "type": "vcs",
             "url": "https://github.com/filbertkm/WikibotDatabase.git"
         },
-		{
-			"type": "vcs",
-			"url": "https://github.com/filbertkm/wikibot.git"
-		}
-	],
-	"require": {
-		"doctrine/dbal": "~2.4",
-		"ircmaxell/password-compat": "~1.0",
-		"lusitanian/oauth": "~0.2",
-		"silex/silex": "1.2.0",
-		"symfony/form": "~2.3",
-		"symfony/security": "~2.4.1",
-		"symfony/security-csrf": "~2.4",
-		"symfony/twig-bridge": "~2.3",
-		"symfony/validator": "~2.3",
-		"twig/twig": "~1.10",
-		"wikibot/wikibot": "dev-master",
-		"wikiclient/wikiclient": "dev-master"
-	},
-	"autoload": {
-		"psr-0": {
-			"Descriptionator\\": "src"
-		}
-	}
+        {
+            "type": "vcs",
+            "url": "https://github.com/filbertkm/wikibot.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/filbertkm/wikibot-api.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/filbertkm/wikibase-store.git"
+        }
+    ],
+    "require": {
+        "doctrine/dbal": "~2.4",
+        "ircmaxell/password-compat": "~1.0",
+        "lusitanian/oauth": "~0.2",
+        "silex/silex": "1.2.0",
+        "symfony/form": "~2.3",
+        "symfony/security": "~2.4.1",
+        "symfony/security-csrf": "~2.4",
+        "symfony/twig-bridge": "~2.3",
+        "symfony/validator": "~2.3",
+        "twig/twig": "~1.10",
+        "wikibot/wikibot": "dev-master",
+        "wikiclient/wikiclient": "dev-master"
+    },
+	"minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "Descriptionator\\": "src"
+        }
+    }
 }
